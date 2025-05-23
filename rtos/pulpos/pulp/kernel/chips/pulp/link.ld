@@ -4,9 +4,8 @@ ENTRY( _start )
 MEMORY
 {
   L2           : ORIGIN = 0x1c000004, LENGTH = 0x0007fffc
-  L2_aliased   : ORIGIN = 0x00000004, LENGTH = 0x00003ffc
-  L1                 : ORIGIN = 0x10000004, LENGTH = 0x0000fffc
-  L1_aliased         : ORIGIN = 0x00000004, LENGTH = 0x0000fffc
+  L1                 : ORIGIN = 0x10000004, LENGTH = 0x0003fffc
+  L1_aliased         : ORIGIN = 0x00000004, LENGTH = 0x0003fffc
 }
 
 /*
@@ -37,7 +36,7 @@ SECTIONS
     . = ALIGN(4);
     *(.data_tiny_fc)
     *(.data_tiny_fc.*)
-  } > L2_aliased AT> L2
+  } > L2
 
 
   .init :
@@ -136,7 +135,6 @@ SECTIONS
     KEEP(*(.gnu.offload_vars))
   } > L2
 
-
   .stack : {
     . = ALIGN(4);
     . = ALIGN(16);
@@ -144,41 +142,6 @@ SECTIONS
     . = . + 0x800;
     stack = .;
   } > L2
-
-
-  .data : {
-    . = ALIGN(4);
-    sdata  =  .;
-    _sdata  =  .;
-    *(.data_fc)
-    *(.data_fc.*)
-    *(.data);
-    *(.data.*)
-    *(.sdata);
-    *(.sdata.*)
-    *(.heapl2ram)
-    *(.fcTcdm)
-    *(.fcTcdm.*)
-    *(.fcTcdm_g)
-    *(.fcTcdm_g.*)
-    . = ALIGN(4);
-    edata  =  .;
-    _edata  =  .;
-  } > L2
-
-
-  .bss : {
-    . = ALIGN(8);
-    _bss_start = .;
-    *(.bss)
-    *(.bss.*)
-    *(.sbss)
-    *(.sbss.*)
-    *(COMMON)
-    . = ALIGN(4);
-    _bss_end = .;
-  } > L2
-
 
   __l2_priv0_end = ALIGN(4);
 
@@ -220,6 +183,38 @@ SECTIONS
    *
    * Contains other data such as peripheral data and cluster code and data
    */
+
+  .bss : {
+    . = ALIGN(8);
+    _bss_start = .;
+    *(.bss)
+    *(.bss.*)
+    *(.sbss)
+    *(.sbss.*)
+    *(COMMON)
+    . = ALIGN(4);
+    _bss_end = .;
+  } > L2
+
+  .data : {
+    . = ALIGN(4);
+    sdata  =  .;
+    _sdata  =  .;
+    *(.data_fc)
+    *(.data_fc.*)
+    *(.data);
+    *(.data.*)
+    *(.sdata);
+    *(.sdata.*)
+    *(.heapl2ram)
+    *(.fcTcdm)
+    *(.fcTcdm.*)
+    *(.fcTcdm_g)
+    *(.fcTcdm_g.*)
+    . = ALIGN(4);
+    edata  =  .;
+    _edata  =  .;
+  } > L2
 
   .l2_data MAX(0x1c010000,ALIGN(4)) :
   {

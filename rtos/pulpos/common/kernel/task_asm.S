@@ -14,13 +14,13 @@
 # limitations under the License.
 #
 
-# 
+#
 # Authors: Germain Haugou, GreenWaves Technologies (germain.haugou@greenwaves-technologies.com)
 #
 
 #include <pos/data/data.h>
 
-    .section .text_l2
+    .section .text_l2, "ax"
 
     .global pos_task_push_asm
 pos_task_push_asm:

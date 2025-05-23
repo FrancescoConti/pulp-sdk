@@ -21,7 +21,7 @@
 #include <archi/pulp.h>
 
 
-    .section .text_l2
+    .section .text_l2, "ax"
 
     #
     # SOC event handler entry
@@ -42,7 +42,6 @@
     sw  x11, 12(sp)
     sw  x12, 16(sp)
     sw  t0, 20(sp)
-
 
 
     #
